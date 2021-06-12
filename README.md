@@ -1,6 +1,6 @@
 # gfmfmt action
 
-Uses pandoc to lint and optionally format markdown to a standard format
+Format your markdown into a standard format, and check PRs have markdown formatted in a standard way using pandoc
 
 ## Inputs
 
