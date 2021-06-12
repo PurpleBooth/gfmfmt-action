@@ -31,6 +31,24 @@ EOC
   [ "$(cat "$MD_FILE")" = "# Hello World" ]
 }
 
+@test "moves to GITHUB_WORKSPACE before running" {
+  MD_DIR="$(mktemp -d)"
+  cat <<EOC > "$MD_DIR/file_one.md"
+Hello World
+===========
+EOC
+  cat <<EOC > "$MD_DIR/file_two.md"
+Hello World
+===========
+EOC
+
+
+  GITHUB_WORKSPACE="$MD_DIR" run ./entrypoint.sh false "*.md"
+  [ "$status" -eq 0 ]
+  [ "$(cat "$MD_DIR/file_one.md")" = "# Hello World" ]
+  [ "$(cat "$MD_DIR/file_two.md")" = "# Hello World" ]
+}
+
 @test "can check an unformatted file" {
   MD_FILE="$(mktemp)"
   cat <<EOC > "$MD_FILE"

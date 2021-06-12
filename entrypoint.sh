@@ -26,6 +26,7 @@ function check() {
   fi
 }
 
+cd "${GITHUB_WORKSPACE:-.}"
 FAILURE=0
 
 for I in "${INPUT_PATHS[@]}"; do
@@ -39,5 +40,6 @@ for I in "${INPUT_PATHS[@]}"; do
     fi
   done < <(compgen -G "$I" || true)
 done
+cd - >/dev/null
 
 exit $FAILURE
