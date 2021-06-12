@@ -20,11 +20,10 @@ formatted in a standard way using pandoc
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
-    - uses: ./
+    - uses: PurpleBooth/gfmfmt-action@v0.1.13
       with:
         path: '*.md'
         check: 'true'
-
 ```
 
 ## Annotations
