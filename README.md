@@ -19,5 +19,4 @@ uses: PurpleBooth/gfmfmt-action@v0.1.6
 with:
   path: "*.md"
   fix: "false"
-  
 ```

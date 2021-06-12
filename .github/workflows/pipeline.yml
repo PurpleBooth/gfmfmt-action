@@ -17,6 +17,16 @@ jobs:
       with:
         sh_checker_comment: true
 
+  lint-markdown:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - uses: PurpleBooth/gfmfmt-action@v0.1.6
+      with:
+        path: '*.md'
+        fix: 'false'
+
+
   test:
     runs-on: ubuntu-latest
     steps:
