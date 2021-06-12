@@ -15,7 +15,7 @@ Uses pandoc to lint and optionally format markdown to a standard format
 ## Example usage
 
 ``` yaml
-uses: PurpleBooth/gfmfmt-action@v0.1.4
+uses: PurpleBooth/gfmfmt-action@v0.1.5
 with:
   fix: "true"
 ```
