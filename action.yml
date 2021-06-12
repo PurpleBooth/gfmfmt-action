@@ -15,3 +15,6 @@ runs:
   args:
   - ${{ inputs.fix }}
   - ${{ inputs.path }}
+branding:
+  icon: award
+  color: blue
