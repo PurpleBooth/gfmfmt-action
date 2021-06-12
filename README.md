@@ -1,6 +1,7 @@
 # gfmfmt action
 
-Format your markdown into a standard format, and check PRs have markdown formatted in a standard way using pandoc
+Format your markdown into a standard format, and check PRs have markdown
+formatted in a standard way using pandoc
 
 ## Inputs
 
