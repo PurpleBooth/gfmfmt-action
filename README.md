@@ -16,10 +16,15 @@ formatted in a standard way using pandoc
 ## Example usage
 
 ``` yaml
-uses: PurpleBooth/gfmfmt-action@v0.1.13
-with:
-  path: "*.md"
-  fix: "false"
+  lint-markdown:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - uses: ./
+      with:
+        path: '*.md'
+        check: 'true'
+
 ```
 
 ## Annotations
