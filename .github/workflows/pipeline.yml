@@ -26,7 +26,6 @@ jobs:
         path: '*.md'
         fix: 'false'
 
-
   test:
     runs-on: ubuntu-latest
     steps:
@@ -64,6 +63,7 @@ jobs:
     - test
     - docker-build
     - versio-plan
+    - lint-markdown
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       GITHUB_USER: ${{ github.actor }}
