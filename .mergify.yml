@@ -2,6 +2,7 @@ queue_rules:
 - name: default
   conditions:
   - status-success=lint
+  - status-success=lint-markdown
   - status-success=test
   - status-success=docker-build
   - status-success=versio-plan
@@ -10,6 +11,7 @@ pull_request_rules:
 - name: automatic rebase for dependencies
   conditions:
   - status-success=lint
+  - status-success=lint-markdown
   - status-success=test
   - status-success=docker-build
   - status-success=versio-plan
