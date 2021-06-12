@@ -1,0 +1,68 @@
+name: Pipeline
+on:
+  push:
+    branches:
+    - '*'
+  pull_request:
+jobs:
+  lint:
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - uses: luizm/action-sh-checker@v0.3.0
+      env:
+        SHFMT_OPTS: -s
+      with:
+        sh_checker_comment: true
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - uses: mig4/setup-bats@v1
+    - run: sudo apt-get install pandoc
+    - run: make test
+
+  docker-build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - uses: docker/build-push-action@v2
+      with:
+        push: false
+
+  versio-plan:
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      GITHUB_USER: ${{ github.actor }}
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2.3.4
+      with:
+        fetch-depth: 0
+    - uses: chaaz/versio-actions/install@v1.1
+    - run: versio check
+    - run: versio plan
+    - run: versio release --dry-run
+
+  release:
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      GITHUB_USER: ${{ github.actor }}
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    needs:
+    - versio-plan
+    - lint
+    - test
+    - docker-build
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2.3.4
+      with:
+        fetch-depth: 0
+    - uses: chaaz/versio-actions/install@v1.1
+    - run: versio release
