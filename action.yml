@@ -7,8 +7,7 @@ inputs:
     default: 'false'
   path:  # id of input
     description: Path to search within for markdown files
-    required: false
-    default: 'false'
+    required: true
 runs:
   using: docker
   image: Dockerfile

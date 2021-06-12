@@ -8,11 +8,9 @@ Uses pandoc to lint and optionally format markdown to a standard format
 
 **Optional** Fix the markdown. Default `"false"`.
 
-## Outputs
+### `path`
 
-### `changed`
-
-`"true"` if the markdown has changed
+**Required** Path to the markdown, which may include globbing.
 
 ## Example usage
 
