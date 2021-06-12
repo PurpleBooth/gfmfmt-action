@@ -1,10 +1,10 @@
 name: gfmfmt action
 description: Uses pandoc to lint and optionally format markdown to a standard format
 inputs:
-  fix:  # id of input
-    description: If "true" format the markdown
+  check:  # id of input
+    description: If "false" will format the markdown
     required: false
-    default: 'false'
+    default: 'true'
   path:  # id of input
     description: Path to search within for markdown files
     required: true
@@ -12,7 +12,7 @@ runs:
   using: docker
   image: Dockerfile
   args:
-  - ${{ inputs.fix }}
+  - ${{ inputs.check }}
   - ${{ inputs.path }}
 branding:
   icon: award

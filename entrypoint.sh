@@ -17,7 +17,10 @@ function check() {
   TEMPORARY_FILE="$(format_to_temp "$1")"
 
   if ! diff "$1" "$TEMPORARY_FILE"; then
-    echo "::error file=$1::This file is badly formatted, run \"pandoc --from=gfm --to=gfm --wrap=auto \"$1\"\" to fix it"
+    echo "::error file=$1::This file is badly formatted, run \"pandoc --from=gfm --to=gfm --wrap=auto '$1'\" to fix it"
+    echo "::group::diff"
+    diff "$1" "$TEMPORARY_FILE"
+    echo "::endgroup::"
     return 1
   fi
 }
@@ -33,12 +36,15 @@ for I in "${INPUT_PATHS[@]}"; do
     if [ "$CHECK_MODE" = "true" ]; then
       if ! check "$FILE"; then
         FAILURE=1
+        echo "☠️ Unformatted $FILE"
       fi
     else
       format "$FILE"
     fi
+
   done < <(compgen -G "$I" || true)
 done
+
 cd - >/dev/null
 
 exit $FAILURE

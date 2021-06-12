@@ -24,7 +24,7 @@ jobs:
     - uses: ./
       with:
         path: '*.md'
-        fix: 'false'
+        check: 'true'
 
   test:
     runs-on: ubuntu-latest

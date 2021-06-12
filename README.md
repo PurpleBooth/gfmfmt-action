@@ -2,6 +2,12 @@
 
 Uses pandoc to lint and optionally format markdown to a standard format
 
+* Some List
+* Some List
+* Some List
+* Some List
+* Some List
+
 ## Inputs
 
 ### `fix`
