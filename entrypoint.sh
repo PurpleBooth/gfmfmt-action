@@ -2,10 +2,6 @@
 
 set -euo pipefail
 
-ARGUMENTS=("$@")
-CHECK_MODE="${ARGUMENTS[0]}"
-INPUT_PATHS=("${ARGUMENTS[@]:1}")
-
 function format_to_temp() {
   TEMPORARY_FILE="$(mktemp -d)/$(basename "$1")"
   pandoc --from=gfm --to=gfm --wrap=auto "$1" >"$TEMPORARY_FILE"
@@ -26,8 +22,11 @@ function check() {
   fi
 }
 
-cd "${GITHUB_WORKSPACE:-.}"
+ARGUMENTS=("$@")
+CHECK_MODE="${ARGUMENTS[0]}"
+INPUT_PATHS=("${ARGUMENTS[@]:1}")
 FAILURE=0
+cd "${GITHUB_WORKSPACE:-.}"
 
 for I in "${INPUT_PATHS[@]}"; do
   while read -r FILE; do
