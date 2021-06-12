@@ -18,6 +18,7 @@ function check() {
 
   if ! diff "$1" "$TEMPORARY_FILE"; then
     MESSAGE="This file is badly formatted, run \"pandoc --from=gfm --to=gfm --wrap=auto '$1'\" to fix it
+
 $(diff "$1" "$TEMPORARY_FILE")"
     MESSAGE="${MESSAGE//'%'/'%25'}"
     MESSAGE="${MESSAGE//$'\n'/'%0A'}"
