@@ -12,6 +12,4 @@ FROM pandoc/core:2.14.0.1
 RUN apk add bash
 
 COPY --from=tester /data/entrypoint.sh /entrypoint.sh
-
-# Code file to execute when the docker container starts up (`entrypoint.sh`)
 ENTRYPOINT ["/entrypoint.sh"]
