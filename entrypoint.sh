@@ -17,7 +17,12 @@ function check() {
   TEMPORARY_FILE="$(format_to_temp "$1")"
 
   if ! diff "$1" "$TEMPORARY_FILE"; then
-    echo "::error file=$1::This file is badly formatted, run \"pandoc --from=gfm --to=gfm --wrap=auto '$1'\" to fix it"
+    MESSAGE="This file is badly formatted, run \"pandoc --from=gfm --to=gfm --wrap=auto '$1'\" to fix it
+$(diff "$1" "$TEMPORARY_FILE")"
+    MESSAGE="${MESSAGE//'%'/'%25'}"
+    MESSAGE="${MESSAGE//$'\n'/'%0A'}"
+    MESSAGE="${MESSAGE//$'\r'/'%0D'}"
+    echo "::error file=$1::$MESSAGE"
     echo "::group::diff"
     diff "$1" "$TEMPORARY_FILE"
     echo "::endgroup::"
