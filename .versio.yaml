@@ -11,7 +11,7 @@ projects:
         default: "0.1.0"
     also:
     - file: README.md
-      pattern: PurpleBooth/gfmfmt@v(\d+\.\d+\.\d+)
+      pattern: PurpleBooth/gfmfmt-action@v(\d+\.\d+\.\d+)
 sizes:
   use_angular: true
   none: ["-", "ci"]
