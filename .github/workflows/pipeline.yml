@@ -49,6 +49,11 @@ jobs:
     - run: versio release --dry-run
 
   release:
+    needs:
+    - lint
+    - test
+    - docker-build
+    - versio-plan
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       GITHUB_USER: ${{ github.actor }}
