@@ -58,6 +58,7 @@ jobs:
     - run: versio release --dry-run
 
   release:
+    if: github.ref == 'refs/heads/main'
     needs:
     - lint
     - test
