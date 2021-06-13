@@ -72,4 +72,4 @@ formatted in a standard way using pandoc
 
 The annotations look like this
 
-<img width="1211" alt="grafik" src="https://user-images.githubusercontent.com/133327/121780729-f2e1f580-cba1-11eb-971e-b6c64661af3f.png">
+<img width="1211" alt="A red annotation with the diff on it" src="https://user-images.githubusercontent.com/133327/121780729-f2e1f580-cba1-11eb-971e-b6c64661af3f.png">
