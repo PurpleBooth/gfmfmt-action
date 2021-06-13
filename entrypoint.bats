@@ -1,6 +1,6 @@
 #!/usr/bin/env bats
 
-@test "can use globbing" {
+@test "can use regex" {
   GITHUB_WORKSPACE="$(mktemp -d)"
   export GITHUB_WORKSPACE
   MD_DIR="$GITHUB_WORKSPACE"
@@ -14,7 +14,7 @@ Hello World
 ===========
 EOC
 
-  run ./entrypoint.sh false ".*file_two.md"
+  run ./entrypoint.sh false "./(subdir|another)/file_two.md"
 
   cat <<EOC > "$MD_DIR/file_one_expected.md"
 Hello World
@@ -65,7 +65,19 @@ EOC
 EOC
 
   run ./entrypoint.sh true ".*\.md"
-  echo "\"$output\""
   [ "$status" -eq 0 ]
   [[ "$output" == *"looks good"* ]]
+}
+
+@test "root is relative" {
+  GITHUB_WORKSPACE="$(mktemp -d)"
+  export GITHUB_WORKSPACE
+  MD_FILE="$GITHUB_WORKSPACE/file.md"
+  cat <<EOC > "$MD_FILE"
+# Hello World
+EOC
+
+  run ./entrypoint.sh true "./file.md$"
+  [ "$status" -eq 0 ]
+  [[ "$output" == *"./file.md looks good"* ]]
 }
