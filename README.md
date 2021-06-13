@@ -19,7 +19,7 @@ formatted in a standard way using pandoc
   lint-markdown:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v2
     - uses: PurpleBooth/gfmfmt-action@v0.1.14
       with:
         path: '*.md'
