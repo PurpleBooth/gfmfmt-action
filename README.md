@@ -20,7 +20,7 @@ formatted in a standard way using pandoc
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - uses: PurpleBooth/gfmfmt-action@v0.1.14
+    - uses: PurpleBooth/gfmfmt-action@v0.2.0
       with:
         path: '*.md'
         check: 'true'
