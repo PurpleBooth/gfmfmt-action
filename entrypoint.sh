@@ -31,28 +31,21 @@ $(diff "$1" "$TEMPORARY_FILE")"
   fi
 }
 
-ARGUMENTS=("$@")
-CHECK_MODE="${ARGUMENTS[0]}"
-INPUT_PATHS=("${ARGUMENTS[@]:1}")
+CHECK_MODE="$1"
+readarray -d '' INPUT_PATHS < <(find "$GITHUB_WORKSPACE" -type f | grep "$2" | tr "\n" "\0")
 FAILURE=0
-cd "${GITHUB_WORKSPACE:-.}"
 
-for I in "${INPUT_PATHS[@]}"; do
-  while read -r FILE; do
-    if [ "$CHECK_MODE" = "true" ]; then
-      if ! check "$FILE"; then
-        FAILURE=1
-        echo -e "\e[31m☠️ $FILE is unformatted\e[0m"
-      else
-        echo -e "\e[32m✨ $FILE looks good\e[0m"
-      fi
+for FILE in "${INPUT_PATHS[@]}"; do
+  if [ "$CHECK_MODE" = "true" ]; then
+    if ! check "$FILE"; then
+      FAILURE=1
+      echo -e "\e[31m☠️ $FILE is unformatted\e[0m"
     else
-      format "$FILE"
+      echo -e "\e[32m✨ $FILE looks good\e[0m"
     fi
-
-  done < <(compgen -G "$I" || true)
+  else
+    format "$FILE"
+  fi
 done
-
-cd - >/dev/null
 
 exit $FAILURE

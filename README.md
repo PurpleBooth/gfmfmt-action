@@ -9,11 +9,23 @@ formatted in a standard way using pandoc
 
 **Optional** Only check the markdown, don't fix it. Default `"true"`.
 
-### `path`
+### `pattern`
 
-**Required** Path to the markdown, which may include globbing.
+**Optional** Pattern to filter files by. Default `".*\.md$"`.
 
 ## Example usage
+
+### Checking all markdown files
+
+``` yaml
+  lint-markdown:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: PurpleBooth/gfmfmt-action@v0.2.1
+```
+
+### Checking some markdown files
 
 ``` yaml
   lint-markdown:
@@ -22,8 +34,38 @@ formatted in a standard way using pandoc
     - uses: actions/checkout@v2
     - uses: PurpleBooth/gfmfmt-action@v0.2.1
       with:
-        path: '*.md'
-        check: 'true'
+        path: 'README.md$'
+```
+
+### Fixing all markdown files
+
+``` yaml
+  lint-markdown:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: PurpleBooth/gfmfmt-action@v0.2.1
+      with:
+        check: 'false'
+    - run: git add . 
+    - run: git commit -m "Formatting markdown"
+    - run: git push
+```
+
+### Fixing some markdown files
+
+``` yaml
+  lint-markdown:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: PurpleBooth/gfmfmt-action@v0.2.1
+      with:
+        check: 'false'
+        path: 'README.md$'
+    - run: git add . 
+    - run: git commit -m "Formatting markdown"
+    - run: git push
 ```
 
 ## Annotations

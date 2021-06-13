@@ -1,73 +1,70 @@
 #!/usr/bin/env bats
 
 @test "can use globbing" {
-  MD_DIR="$(mktemp -d)"
+  GITHUB_WORKSPACE="$(mktemp -d)"
+  export GITHUB_WORKSPACE
+  MD_DIR="$GITHUB_WORKSPACE"
   cat <<EOC > "$MD_DIR/file_one.md"
 Hello World
 ===========
 EOC
-  cat <<EOC > "$MD_DIR/file_two.md"
+  mkdir "$MD_DIR/subdir"
+  cat <<EOC > "$MD_DIR/subdir/file_two.md"
 Hello World
 ===========
 EOC
 
+  run ./entrypoint.sh false ".*file_two.md"
 
-  run ./entrypoint.sh false "$MD_DIR/file*.md"
+  cat <<EOC > "$MD_DIR/file_one_expected.md"
+Hello World
+===========
+EOC
+
   [ "$status" -eq 0 ]
-  [ "$(cat "$MD_DIR/file_one.md")" = "# Hello World" ]
-  [ "$(cat "$MD_DIR/file_two.md")" = "# Hello World" ]
+  [ "$(cat "$MD_DIR/file_one.md")" = "$(cat "$MD_DIR/file_one_expected.md")" ]
+  [ "$(cat "$MD_DIR/subdir/file_two.md")" = "# Hello World" ]
 }
 
 
 @test "can format a file" {
-  MD_FILE="$(mktemp)"
+  GITHUB_WORKSPACE="$(mktemp -d)"
+  export GITHUB_WORKSPACE
+  MD_FILE="$GITHUB_WORKSPACE/file.md"
   cat <<EOC > "$MD_FILE"
 Hello World
 ===========
 EOC
 
-  run ./entrypoint.sh false "$MD_FILE"
+  run ./entrypoint.sh false ".*\.md"
+  echo $output
   [ "$status" -eq 0 ]
   [ "$(cat "$MD_FILE")" = "# Hello World" ]
 }
 
-@test "moves to GITHUB_WORKSPACE before running" {
-  MD_DIR="$(mktemp -d)"
-  cat <<EOC > "$MD_DIR/file_one.md"
-Hello World
-===========
-EOC
-  cat <<EOC > "$MD_DIR/file_two.md"
-Hello World
-===========
-EOC
-
-
-  GITHUB_WORKSPACE="$MD_DIR" run ./entrypoint.sh false "*.md"
-  [ "$status" -eq 0 ]
-  [ "$(cat "$MD_DIR/file_one.md")" = "# Hello World" ]
-  [ "$(cat "$MD_DIR/file_two.md")" = "# Hello World" ]
-}
-
 @test "can check an unformatted file" {
-  MD_FILE="$(mktemp)"
+  GITHUB_WORKSPACE="$(mktemp -d)"
+  export GITHUB_WORKSPACE
+  MD_FILE="$GITHUB_WORKSPACE/file.md"
   cat <<EOC > "$MD_FILE"
 Hello World
 ===========
 EOC
 
-  run ./entrypoint.sh true "$MD_FILE"
-  [ "$status" -eq 1 ]
+  run ./entrypoint.sh true ".*\.md"
   [[ "$output" == *"# Hello World"* ]]
+  [ "$status" -eq 1 ]
 }
 
 @test "can check a formatted file" {
-  MD_FILE="$(mktemp)"
+  GITHUB_WORKSPACE="$(mktemp -d)"
+  export GITHUB_WORKSPACE
+  MD_FILE="$GITHUB_WORKSPACE/file.md"
   cat <<EOC > "$MD_FILE"
 # Hello World
 EOC
 
-  run ./entrypoint.sh true "$MD_FILE"
+  run ./entrypoint.sh true ".*\.md"
   echo "\"$output\""
   [ "$status" -eq 0 ]
   [[ "$output" == *"looks good"* ]]

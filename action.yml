@@ -5,15 +5,16 @@ inputs:
     description: If "false" will format the markdown
     required: false
     default: 'true'
-  path:  # id of input
-    description: Path to search within for markdown files
-    required: true
+  pattern:  # id of input
+    description: Pattern to filter files by
+    required: false
+    default: .*\.md$
 runs:
   using: docker
   image: Dockerfile
   args:
   - ${{ inputs.check }}
-  - ${{ inputs.path }}
+  - ${{ inputs.pattern }}
 branding:
   icon: award
   color: blue
