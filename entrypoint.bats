@@ -70,5 +70,5 @@ EOC
   run ./entrypoint.sh true "$MD_FILE"
   echo "\"$output\""
   [ "$status" -eq 0 ]
-  [[ "$output" == *"Looks good"* ]]
+  [[ "$output" == *"looks good"* ]]
 }
