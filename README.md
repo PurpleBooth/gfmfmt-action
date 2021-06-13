@@ -22,7 +22,7 @@ formatted in a standard way using pandoc
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - uses: PurpleBooth/gfmfmt-action@v1.0.0
+    - uses: PurpleBooth/gfmfmt-action@v1.0.1
 ```
 
 ### Checking some markdown files
