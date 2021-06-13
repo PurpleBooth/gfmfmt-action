@@ -32,20 +32,22 @@ $(diff "$1" "$TEMPORARY_FILE")"
 }
 
 CHECK_MODE="$1"
-readarray -d '' INPUT_PATHS < <(find "$GITHUB_WORKSPACE" -type f | grep "$2" | tr "\n" "\0")
+readarray -d '' INPUT_PATHS < <(find "$GITHUB_WORKSPACE" -exec realpath --relative-to "$GITHUB_WORKSPACE" {} \; -type f | grep "$2" | tr "\n" "\0")
 FAILURE=0
-
-for FILE in "${INPUT_PATHS[@]}"; do
-  if [ "$CHECK_MODE" = "true" ]; then
-    if ! check "$FILE"; then
-      FAILURE=1
-      echo -e "\e[31m☠️ $FILE is unformatted\e[0m"
+{
+  cd "$GITHUB_WORKSPACE"
+  for FILE in "${INPUT_PATHS[@]}"; do
+    if [ "$CHECK_MODE" = "true" ]; then
+      if ! check "$FILE"; then
+        FAILURE=1
+        echo -e "\e[31m☠️ $FILE is unformatted\e[0m"
+      else
+        echo -e "\e[32m✨ $FILE looks good\e[0m"
+      fi
     else
-      echo -e "\e[32m✨ $FILE looks good\e[0m"
+      format "$FILE"
     fi
-  else
-    format "$FILE"
-  fi
-done
+  done
+}
 
 exit $FAILURE
