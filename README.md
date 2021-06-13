@@ -5,9 +5,9 @@ formatted in a standard way using pandoc
 
 ## Inputs
 
-### `fix`
+### `check`
 
-**Optional** Fix the markdown. Default `"false"`.
+**Optional** Only check the markdown, don't fix it. Default `"true"`.
 
 ### `path`
 
