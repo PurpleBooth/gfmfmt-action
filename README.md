@@ -32,9 +32,9 @@ formatted in a standard way using pandoc
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - uses: PurpleBooth/gfmfmt-action@v0.2.1
+    - uses: PurpleBooth/gfmfmt-action@v1.0.3
       with:
-        path: 'README.md$'
+        pattern: 'README.md$'
 ```
 
 ### Fixing all markdown files
@@ -44,7 +44,7 @@ formatted in a standard way using pandoc
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - uses: PurpleBooth/gfmfmt-action@v0.2.1
+    - uses: PurpleBooth/gfmfmt-action@v1.0.3
       with:
         check: 'false'
     - run: git add . 
@@ -59,10 +59,10 @@ formatted in a standard way using pandoc
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - uses: PurpleBooth/gfmfmt-action@v0.2.1
+    - uses: PurpleBooth/gfmfmt-action@v1.0.3
       with:
         check: 'false'
-        path: 'README.md$'
+        pattern: 'README.md$'
     - run: git add . 
     - run: git commit -m "Formatting markdown"
     - run: git push
