@@ -42,7 +42,9 @@ for I in "${INPUT_PATHS[@]}"; do
     if [ "$CHECK_MODE" = "true" ]; then
       if ! check "$FILE"; then
         FAILURE=1
-        echo "☠️ Unformatted $FILE"
+        echo -e "\e[31m☠️ Unformatted $FILE\e[0m"
+      else
+        echo -e "\e[32m✨ Looks good $FILE\e[0m"
       fi
     else
       format "$FILE"
