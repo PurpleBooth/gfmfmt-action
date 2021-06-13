@@ -31,11 +31,12 @@ $(diff "$1" "$TEMPORARY_FILE")"
   fi
 }
 
-CHECK_MODE="$1"
-readarray -d '' INPUT_PATHS < <(find "$GITHUB_WORKSPACE" -exec realpath --relative-to "$GITHUB_WORKSPACE" {} \; -type f | grep "$2" | tr "\n" "\0")
-FAILURE=0
 {
   cd "$GITHUB_WORKSPACE"
+  CHECK_MODE="$1"
+  readarray -d '' INPUT_PATHS < <(find "./" -type f | grep "$2" | tr "\n" "\0")
+  FAILURE=0
+
   for FILE in "${INPUT_PATHS[@]}"; do
     if [ "$CHECK_MODE" = "true" ]; then
       if ! check "$FILE"; then
