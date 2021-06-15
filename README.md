@@ -116,6 +116,7 @@ end
 ```
 
 Use it like
+
 ``` shell
 gfmfmt something.md somethingelse.md
 ```
