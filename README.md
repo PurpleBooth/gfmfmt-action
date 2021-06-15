@@ -90,33 +90,4 @@ The annotations look like this
 
 ## CLI Tool
 
-If you want a cli tool to do this you can add this to your `.bashrc` or
-`.zshrc`.
-
-``` shell
-function gfmfmt() {
-  for I in "$@"; do
-    TEMPORARY_FILE="$(mktemp -d)/$(basename "$I")"
-    pandoc --from=gfm --to=gfm --wrap=auto "$I" >"$TEMPORARY_FILE"
-    mv "$TEMPORARY_FILE" "$I"
-  done
-}
-```
-
-If you prefer fish
-
-``` fish
-function gfmfmt
-      for I in $argv
-            set -lx TEMPORARY_FILE (mktemp -d)"/"(basename "$I")
-            pandoc --from=gfm --to=gfm --wrap=auto "$I" > "$TEMPORARY_FILE"
-            mv "$TEMPORARY_FILE" "$I"
-      end
-end
-```
-
-Use it like
-
-``` shell
-gfmfmt something.md somethingelse.md
-```
+See [PurpleBooth/gfmfmt](https://github.com/PurpleBooth/gfmfmt)
