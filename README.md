@@ -115,7 +115,7 @@ function gfmfmt
 end
 ```
 
+Use it like
 ``` shell
-## Use it like
 gfmfmt something.md somethingelse.md
 ```
