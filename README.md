@@ -1,7 +1,21 @@
 # gfmfmt action
 
-Format your markdown into a standard format, and check PRs have markdown
-formatted in a standard way using pandoc
+Format your markdown into a standard format, and check users have
+formatted their markdown formatted uniformly using
+[pandoc](https://pandoc.org/)
+
+## A note on Markdown Flavours
+
+While it may appear that Markdown is a single standard, that's not quite
+true, there's lots of little extensions to it that make it not exactly
+the same across the board. This is intended for use with "[GitHub
+Flavoured
+Markdown](https://docs.github.com/en/github/writing-on-github)". You can
+read more about this on the [pandoc
+docs](https://pandoc.org/MANUAL.html#markdown-variants).
+
+The name comes from this fact: gfmfmt, GitHub Flavoured Markdown
+Formatter.
 
 ## Inputs
 
@@ -73,3 +87,35 @@ formatted in a standard way using pandoc
 The annotations look like this
 
 <img width="1211" alt="A red annotation with the diff on it" src="https://user-images.githubusercontent.com/133327/121780729-f2e1f580-cba1-11eb-971e-b6c64661af3f.png">
+
+## CLI Tool
+
+If you want a cli tool to do this you can add this to your `.bashrc` or
+`.zshrc`.
+
+``` shell
+function gfmfmt() {
+  for I in "$@"; do
+    TEMPORARY_FILE="$(mktemp -d)/$(basename "$I")"
+    pandoc --from=gfm --to=gfm --wrap=auto "$I" >"$TEMPORARY_FILE"
+    mv "$TEMPORARY_FILE" "$I"
+  done
+}
+```
+
+If you prefer fish
+
+``` fish
+function gfmfmt
+      for I in $argv
+            set -lx TEMPORARY_FILE (mktemp -d)"/"(basename "$I")
+            pandoc --from=gfm --to=gfm --wrap=auto "$I" > "$TEMPORARY_FILE"
+            mv "$TEMPORARY_FILE" "$I"
+      end
+end
+```
+
+``` shell
+## Use it like
+gfmfmt something.md somethingelse.md
+```
