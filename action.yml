@@ -8,7 +8,7 @@ inputs:
   pattern:  # id of input
     description: Pattern to filter files by
     required: false
-    default: .*\.md$
+    default: ^(?!\./\.github/ISSUE_TEMPLATE/).*\.md$
 runs:
   using: docker
   image: Dockerfile
