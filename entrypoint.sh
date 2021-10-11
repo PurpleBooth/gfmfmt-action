@@ -34,7 +34,7 @@ $(diff "$1" "$TEMPORARY_FILE")"
 {
   cd "$GITHUB_WORKSPACE"
   CHECK_MODE="$1"
-  readarray -d '' INPUT_PATHS < <(find "." -type f | grep -E "$2" | tr "\n" "\0")
+  readarray -d '' INPUT_PATHS < <(find "." -type f | grep -P "$2" | tr "\n" "\0")
   FAILURE=0
 
   for FILE in "${INPUT_PATHS[@]}"; do
