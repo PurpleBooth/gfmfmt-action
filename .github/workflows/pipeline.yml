@@ -107,11 +107,10 @@ jobs:
       run: echo ::set-output name=REPOSITORY_NAME::$(echo "$GITHUB_REPOSITORY" | awk
         -F / '{print $2}' | sed -e "s/:refs//")
       shell: bash
-    - uses: dlavrenuek/conventional-changelog-action@v1.2.0
+    - uses: PurpleBooth/changelog-action@v0.1.2
       id: changelog
       with:
-        from: v${{ needs.release.outputs.previous_version }}
-        to: v${{ needs.release.outputs.current_version }}
+        args: v${{ needs.release.outputs.previous_version }}..v${{ needs.release.outputs.current_version }}
     - env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       id: create_release
@@ -119,6 +118,6 @@ jobs:
       with:
         allowUpdates: true
         token: ${{ secrets.GITHUB_TOKEN }}
-        body: ${{ steps.changelog.outputs.body }}
+        bodyFile: ${{ steps.changelog.outputs.changelog }}
         name: Release v${{ needs.release.outputs.current_version }}
         tag: v${{ needs.release.outputs.current_version }}
