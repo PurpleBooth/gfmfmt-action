@@ -36,7 +36,7 @@ Formatter.
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - uses: PurpleBooth/gfmfmt-action@v2.0.7
+    - uses: PurpleBooth/gfmfmt-action@v2.0.8
 ```
 
 ### Checking some markdown files
