@@ -1,4 +1,4 @@
-FROM pandoc/core:2.19.2.0 as tester
+FROM pandoc/core:3.0.0.0 as tester
 
 RUN apk add bats
 RUN apk add bash
@@ -9,7 +9,7 @@ RUN chmod +x /data/entrypoint.bats /data/entrypoint.sh
 RUN /data/entrypoint.bats
 
 
-FROM pandoc/core:2.19.2.0
+FROM pandoc/core:3.0.0.0
 RUN apk add bash
 RUN apk add grep
 
